@@ -1,0 +1,8 @@
+#index:
+#    path: /{ _controller: 'App\Con
+#    defaults: troller\DefaultController::index' }
+
+controllers:
+    resource: ../src/Controller/
+    type: annotation 
+
