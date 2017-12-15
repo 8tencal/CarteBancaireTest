@@ -24,7 +24,7 @@ class HomeController
 
 
     /**
-	* @Route("/", name = "home" )
+	* @Route("/home", name = "home" )
 	*
 	* @param Request $request 	
 	* @return Response
