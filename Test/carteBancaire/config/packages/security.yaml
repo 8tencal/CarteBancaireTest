@@ -34,6 +34,7 @@ security:
         - { path: ^/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #Logged in
         - { path: ^/(.+), roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
+        - { path: ^/admin, roles: [ROLE_ADMIN] }
         #No authentication required for the home page
         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
                     # ...

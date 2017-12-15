@@ -10,9 +10,9 @@ logout:
     path: /logout
 
 
-#accueil:
-#    path: /
-#    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
-#    defaults:
-#        path: /accueil
-#        permanent: true
+accueil:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+    defaults:
+        path: /login
+        permanent: true
