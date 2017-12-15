@@ -5,9 +5,10 @@
  * Date: 12/14/17
  * Time: 11:24 PM
  */
-namespace Tests\App\Controller;
+namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+
 
 class AccueilControllerTest extends WebTestCase
 {
@@ -15,7 +16,8 @@ class AccueilControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $crawler = $client->request('GET','/');
+
         $this->assertEquals(200,$client->getResponse()->getStatusCode());
-        $this->assertContains('COUCOU',$crawler->filter('#container h1')->text());
+        $this->assertContains('COUCOU',$crawler->filter('h1')->text());
     }
 }
