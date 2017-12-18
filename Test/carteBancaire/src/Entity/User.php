@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\OneToMany;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * @ORM\Table(name="app_users")
@@ -30,6 +32,11 @@ class User implements UserInterface, \Serializable
      * @ORM\Column(type="string", length=25, unique=true)
      */
     private $username;
+
+    /**
+     * @OneToMany(targetEntity="CreditCard", mappedBy="user", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $cards;
 
     /**
      * @Assert\NotBlank()
@@ -187,4 +194,20 @@ class User implements UserInterface, \Serializable
             // $this->salt
             ) = unserialize($serialized);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCards()
+    {
+        return $this->cards;
+    }
+
+
+    public function __toString()
+    {
+        return $this->username;
+    }
+
+
 }
