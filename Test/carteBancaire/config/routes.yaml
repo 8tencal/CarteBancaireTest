@@ -9,6 +9,9 @@ controllers:
 logout:
     path: /logout
 
+register:
+    path: /register
+
 
 accueil:
     path: /
