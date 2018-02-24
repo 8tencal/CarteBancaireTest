@@ -56,6 +56,15 @@
     "doctrine/orm": {
         "version": "v2.5.13"
     },
+    "friendsofsymfony/jsrouting-bundle": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "2.0",
+            "ref": "370bcf99b04c0dfd0b545745aad622d757af5e1b"
+        }
+    },
     "javiereguiluz/easyadmin-bundle": {
         "version": "1.17",
         "recipe": {
@@ -245,6 +254,9 @@
             "ref": "85834af1496735f28d831489d12ab1921a875e0d"
         }
     },
+    "symfony/serializer": {
+        "version": "v4.0.4"
+    },
     "symfony/stopwatch": {
         "version": "v4.0.2"
     },
@@ -307,6 +319,9 @@
     },
     "twig/twig": {
         "version": "v2.4.4"
+    },
+    "willdurand/jsonp-callback-validator": {
+        "version": "v1.1.0"
     },
     "zendframework/zend-code": {
         "version": "3.3.0"

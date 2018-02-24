@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\CreditCard;
+use App\Form\CreditCardType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 class CreditCardController extends Controller
 {
     /**
-     * @Route("/credit/card", name="credit_card")
+     * @Route("/credit/addcard", name="addcard")
      */
     public function addCreditCard(Request $request)
     {
@@ -23,26 +24,88 @@ class CreditCardController extends Controller
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // 3) Encode the password (you could also do this via Doctrine listener)
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-
-            // 4) save the User!
+            $creditCard->setUser($this->getUser());
             $em = $this->getDoctrine()->getManager();
-            $em->persist($user);
+            $em->persist($creditCard);
             $em->flush();
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
 
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('mycards');
         }
 
         return $this->render(
-            'registration/register.html.twig',
+            'pages/addcarte.html.twig',
             array('form' => $form->createView())
         );
 
 
     }
+
+    /**
+     * @Route("/credit/editcard", name="editcard", options={"expose"=true})
+     */
+    public function editCreditCard(Request $request)
+    {
+        // 1) build the form
+        //$creditCard = new CreditCard();
+        $em = $this->getDoctrine()->getManager();
+        $creditCard = $em->getRepository(CreditCard::class)->find($request->get('id'));
+        $form = $this->createForm(CreditCardType::class, $creditCard);
+
+        // 2) handle the submit (will only happen on POST)
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $creditCard->setUser($this->getUser());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($creditCard);
+            $em->flush();
+
+
+            return $this->redirectToRoute('mycards');
+        }
+
+        return $this->render(
+            'pages/editcarte.html.twig',
+            array('form' => $form->createView())
+        );
+
+
+    }
+
+    /**
+     * @Route("/credit/deletecard", name="deletecard", options={"expose"=true})
+     */
+    public function deleteCreditCard(Request $request)
+    {
+        // 1) build the form
+        //$creditCard = new CreditCard();
+        $em = $this->getDoctrine()->getManager();
+        $creditCard = $em->getRepository(CreditCard::class)->find($request->get('id'));
+
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($creditCard);
+            $em->flush();
+
+
+            return $this->redirectToRoute('mycards');
+
+    }
+
+    /**
+     * @Route("/credit/mycards", name="mycards")
+     */
+    public function mesCartes(Request $request)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $cards = $em->getRepository(CreditCard::class)->findByUser($this->getUser());
+        return $this->render(
+            'pages/mescartes.html.twig',
+            array('cartes' => $cards)
+        );
+
+
+    }
+
 }

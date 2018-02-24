@@ -1,0 +1,17 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block body %}
+<section>
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+
+    <button type="submit">enregistrer les changements</button>
+    {{ form_end(form) }}
+</section>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}
