@@ -35,7 +35,7 @@ class CreditCard
     private $csv;
 
     /**
-     * @ManyToOne(targetEntity="User")
+     * @ManyToOne(targetEntity="User", inversedBy="cards")
      * @JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

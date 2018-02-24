@@ -1,0 +1,114 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Mes cartes{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset("datatables/datatables.min.css") }}" />
+{% endblock %}
+{% block menu %}
+    {{parent()}}
+{% endblock %}
+
+{% block body %}
+    <section>
+        <a href="{{ path('addcard') }}"> <button class="btn-dark">ajouter une carte</button></a>
+    <div class="panel panel-info" style="width:90%; margin-left:auto; margin-right:auto;">
+        <div class="panel-heading">Mes cartes</div>
+        <div class="panel-body">
+            <!-- On peut mettre un pti message ici pourquoi pas -->
+        </div>
+        <table id="tableCartes" cellpadding="0" cellspacing="0"  border="0" class="table table-striped" style="width:100%;">
+            <thead>
+            <tr>
+                <th data-field="id" style="display:none;" data-sortable="true">idCarte</th>
+                <th data-field="cardNum" data-sortable="true">numero de carte</th>
+                <th data-field="expirationDate" data-sortable="true">date d'expiration</th>
+                <th data-field="csv" data-sortable="true">csv</th>
+                <th data-field="edit" data-sortable="false">edit</th>
+                <th data-field="delete" data-sortable="false">delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for carte in cartes %}
+                <tr>
+                    <td style="display:none;">
+                        {{ carte.id }}
+                    </td>
+                    <td>
+                        {{carte.cardNumber}}
+                    </td>
+                    <td>
+                        {{ carte.expirationDate|date("Y-m-d")  }}
+                    </td>
+                    <td>
+                        {{carte.csv }}
+                    </td>
+                    <td>
+                        <button class="btn btn-warning edit">Editer</button>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger">Supprimer</button>
+                    </td>
+                </tr>
+
+
+            {% endfor %}
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+    <script src="{{ asset("datatables/datatables.min.js") }}"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script>
+
+        var tableCartes = $('#tableCartes').DataTable({
+            "scrollX":true,
+            "paging": false,
+            "language": {
+                "lengthMenu": "Afficher _MENU_ lignes par page",
+                "zeroRecords": "Aucun contenu - désolé",
+                "info": "",
+                "infoEmpty": "Aucune information disponible",
+                "infoFiltered": "(filtered from _MAX_ total records)",
+                "emptyTable": "No data available in table",
+                "infoPostFix": "",
+                "loadingRecords": "Chargement...",
+                "search": "Recherche:",
+                "paginate": {
+                    "first": "Premier",
+                    "last": "Dernier",
+                    "next": "Suivant",
+                    "previous": "Précédent"
+                }
+            }
+        });
+        $('#tableCartes tbody').on('click', 'tr', function (e) {
+            //alert("yolo");
+            val = e.target.nodeName; //récupère juste le nom. $(e.target) récupère tout l'objet, e.target récupère juste le morceau HTML.
+            if(val==="BUTTON" && e.target.innerHTML == "Editer") {
+                var data = tableCartes.row(this).data();
+
+                //window.open(route,"_self");
+                window.open(Routing.generate('editcard', {'id': data[0]}), "_self");
+            }
+            else if(val==="BUTTON" && e.target.innerHTML == "Supprimer")
+            {
+                var data = tableCartes.row(this).data();
+
+                //window.open(route,"_self");
+                window.open(Routing.generate('deletecard', {'id': data[0]}), "_self");
+            }
+        } );
+    </script>
+{% endblock %}
