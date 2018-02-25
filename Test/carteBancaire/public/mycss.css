@@ -10,6 +10,10 @@ section
 {
     background-color:black;
 }
+div.navbar-header a
+{
+    margin-right: 30px;
+}
 .navbar ul
 {
     list-style: none;
