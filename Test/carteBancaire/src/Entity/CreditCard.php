@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CreditCardRepository")
@@ -19,7 +20,16 @@ class CreditCard
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=16, unique=true)
+     *
+     * @Assert\Length(
+     *      min = 16,
+     *      max = 16,
+     *      exactMessage = "Your card number must be {{ limit }} characters long",
+     *      minMessage = "Your card number must be {{ limit }} characters long",
+     *      maxMessage = "Your card number must be {{ limit }} characters long"
+     * )
+     *
      */
     private $cardNumber;
 
@@ -30,7 +40,7 @@ class CreditCard
 
 
     /**
-     * @ORM\Column(type="string", length=3, unique=true)
+     * @ORM\Column(type="string", length=3, unique=false)
      */
     private $csv;
 

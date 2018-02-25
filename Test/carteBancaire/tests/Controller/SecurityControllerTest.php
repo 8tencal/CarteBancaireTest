@@ -24,10 +24,13 @@ class SecurityControllerTest extends WebTestCase
 
 // submit the form
         $crawler = $client->submit($form);
+
+        // test qu'on est bien redirigé.
         $this->assertTrue($client->getResponse()->isRedirect());
         //Suivons la redirection
         $crawler = $client->followRedirect();
 
+        $this->assertContains('COUCOU',$crawler->filter('h1')->text());
 
     }
 
