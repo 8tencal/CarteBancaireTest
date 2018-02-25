@@ -14,32 +14,42 @@ class SecurityControllerTest extends WebTestCase
     public function testGoodLogin()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/login');
 
-        $form = $crawler->selectButton('submit')->form();
+        $form = $crawler->selectButton('login')->form();
 
 // set some values
-        $form['username'] = 'antoine';
-        $form['password'] = 'test';
+        $form['_username'] = 'antoine';
+        $form['_password'] = 'test';
 
 // submit the form
         $crawler = $client->submit($form);
+        $this->assertTrue($client->getResponse()->isRedirect());
+        //Suivons la redirection
+        $crawler = $client->followRedirect();
+
 
     }
 
+    /**
+     * @runInSeparateProcess
+     */
     public function testBadLogin()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/');
+        $crawler = $client->request('GET', '/login');
 
-        $form = $crawler->selectButton('submit')->form();
+        $form = $crawler->selectButton('login')->form();
 
 // set some values
-        $form['username'] = 'pierre';
-        $form['password'] = '1234';
+        $form['_username'] = 'pierre';
+        $form['_password'] = '1234';
 
 // submit the form
         $crawler = $client->submit($form);
+        //var_dump($client->getResponse());
+        $this->assertEquals(302,$client->getResponse()->getStatusCode());
+        //$this->assertContains('Mes cartes',$crawler->filter('div')->text());
 
     }
 

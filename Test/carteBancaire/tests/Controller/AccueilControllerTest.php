@@ -21,8 +21,10 @@ class AccueilControllerTest extends WebTestCase
         $crawler = $client->request('GET','/');
         //var_dump($crawler);
         //die();
-        echo $crawler->html();
-        $this->assertEquals(200,$client->getResponse()->getStatusCode());
-        $this->assertContains('COUCOU',$crawler->filter('h1')->text());
+        //echo $crawler->html();
+        //$this->assertEquals(200,$client->getResponse()->getStatusCode());
+        // On test qu'on se fait bien refusé la page d'accueil puisqu'on est pas connecté.
+        $this->assertEquals(301,$client->getResponse()->getStatusCode());
+        //$this->assertNotContains('COUCOU',$crawler->filter('h1')->text());
     }
 }
