@@ -8,10 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 use App\Entity\CreditCard;
-use App\Form\CreditCardType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
+
 
 
 class CreditCardControllerTest extends WebTestCase
@@ -135,24 +132,6 @@ class CreditCardControllerTest extends WebTestCase
         $this->assertEquals(0,$this->crawler->filter('td:contains("1234657438579284")')->count());
 
     }
-
-    /**
-     * @runInSeparateProcess
-
-    public function testSuppressionCarte()
-    {
-
-        // On rajoute une carte pour le test.
-        $this->testAjoutCarte();
-        $this->crawler=$this->client->request('GET','/credit/mycards');
-        $button = $this->crawler->filter('tr:contains("1234657438579284")')->eq(0)->link();
-        var_dump($button);
-        $this->crawler = $this->client->click($button);
-
-
-        $this->assertEquals(0,$this->crawler->filter('td:contains("1234657438579284")')->count());
-
-    }*/
 
 
 }
